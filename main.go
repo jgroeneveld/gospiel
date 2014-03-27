@@ -3,6 +3,8 @@ package main
 import (
 	"runtime"
 
+	sf "bitbucket.org/krepa098/gosfml2"
+
 	"github.com/jgroeneveld/game/game"
 )
 
@@ -11,6 +13,13 @@ func init() {
 }
 
 func main() {
+	window := sf.NewRenderWindow(
+		sf.VideoMode{800, 600, 32},
+		"Hallo Welt",
+		sf.StyleDefault,
+		sf.DefaultContextSettings(),
+	)
+
 	game := game.Game{}
-	game.Start()
+	game.Start(window)
 }

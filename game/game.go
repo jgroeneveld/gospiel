@@ -12,13 +12,8 @@ type Game struct {
 	entity *Entity
 }
 
-func (g *Game) Start() {
-	g.window = sf.NewRenderWindow(
-		sf.VideoMode{800, 600, 32},
-		"Hallo Welt",
-		sf.StyleDefault,
-		sf.DefaultContextSettings(),
-	)
+func (g *Game) Start(window *sf.RenderWindow) {
+	g.window = window
 
 	texture, err := sf.NewTextureFromFile("foo.png", nil)
 	if err != nil {
