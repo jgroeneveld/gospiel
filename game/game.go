@@ -34,7 +34,7 @@ func (g *Game) Start() {
 }
 
 func (g *Game) mainLoop() {
-	renderTicker := time.NewTicker(time.Second / 30)
+	renderTicker := time.NewTicker(time.Second / 60)
 	updateTicker := time.NewTicker(time.Second / 60)
 
 	for g.window.IsOpen() {
