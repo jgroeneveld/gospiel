@@ -20,6 +20,6 @@ func main() {
 		sf.DefaultContextSettings(),
 	)
 
-	game := game.Game{}
+	game := game.New()
 	game.Start(window)
 }
