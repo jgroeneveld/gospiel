@@ -34,18 +34,38 @@ func (g *Game) Start() {
 }
 
 func (g *Game) mainLoop() {
-	ticker := time.NewTicker(time.Second / 60)
+	renderTicker := time.NewTicker(time.Second / 30)
+	updateTicker := time.NewTicker(time.Second / 60)
 
 	for g.window.IsOpen() {
 		select {
-		case <-ticker.C:
-			for event := g.window.PollEvent(); event != nil; event = g.window.PollEvent() {
-				g.onEvent(event)
-			}
+		case <-updateTicker.C:
+			g.onUpdate()
 
-			g.onTick()
+		case <-renderTicker.C:
+			g.onRender()
 		}
 	}
+}
+
+func (g *Game) onUpdate() {
+	for event := g.window.PollEvent(); event != nil; event = g.window.PollEvent() {
+		g.onEvent(event)
+	}
+
+	// crashes, why?
+	// if sf.KeyboardIsKeyPressed(sf.KeyRight) {
+		pos := g.sprite.GetPosition()
+		x := pos.X + 2
+		y := pos.Y
+		g.sprite.SetPosition(sf.Vector2f{x, y})
+	// }
+}
+
+func (g *Game) onRender() {
+	g.window.Clear(sf.ColorMagenta())
+	g.window.Draw(g.sprite, sf.DefaultRenderStates())
+	g.window.Display()
 }
 
 func (g *Game) onEvent(event sf.Event) {
@@ -57,30 +77,9 @@ func (g *Game) onEvent(event sf.Event) {
 	}
 }
 
-func (g *Game) onTick() {
-	// g.onUpdate()
-	g.window.Clear(sf.ColorMagenta())
-	g.onRender()
-	g.window.Display()
-}
-
-func (g *Game) onRender() {
-	g.window.Draw(g.sprite, sf.DefaultRenderStates())
-}
-
 func (g *Game) onKeyReleased(keyCode sf.KeyCode) {
 	if keyCode == sf.KeyEscape {
 		g.Close()
-	}
-}
-
-// crashes, why?
-func (g *Game) onUpdate() {
-	if sf.KeyboardIsKeyPressed(sf.KeyRight) {
-		pos := g.sprite.GetPosition()
-		x := pos.X + 5
-		y := pos.Y
-		g.sprite.SetPosition(sf.Vector2f{x, y})
 	}
 }
 
