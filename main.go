@@ -21,7 +21,7 @@ type Game struct {
 
 func (g *Game) start() {
 	g.window = sf.NewRenderWindow(
-		sf.VideoMode{200, 100, 32},
+		sf.VideoMode{800, 600, 32},
 		"Hallo Welt",
 		sf.StyleDefault,
 		sf.DefaultContextSettings(),
@@ -59,13 +59,13 @@ func (g *Game) onEvent(event sf.Event) {
 		switch ev := event.(type) {
 		case sf.EventKeyReleased:
 			g.onKeyReleased(ev.Code)
-
 		case sf.EventClosed:
 			g.Close()
 		}
 }
 
 func (g *Game) onTick() {
+	// g.onUpdate()
 	g.window.Clear(sf.ColorMagenta())
 	g.onRender()
 	g.window.Display()
@@ -78,6 +78,16 @@ func (g *Game) onRender() {
 func (g *Game) onKeyReleased(keyCode sf.KeyCode) {
 	if keyCode == sf.KeyEscape {
 		g.Close()
+	}
+}
+
+// crashes, why?
+func (g *Game) onUpdate() {
+	if sf.KeyboardIsKeyPressed(sf.KeyRight) {
+		pos := g.sprite.GetPosition()
+		x := pos.X + 5
+		y := pos.Y
+		g.sprite.SetPosition(sf.Vector2f{x,y})
 	}
 }
 
