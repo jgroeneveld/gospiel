@@ -9,7 +9,7 @@ import (
 
 type Game struct {
 	window *sf.RenderWindow
-	sprite *sf.Sprite
+	entity *Entity
 }
 
 func (g *Game) Start() {
@@ -25,16 +25,17 @@ func (g *Game) Start() {
 		log.Fatal(err)
 	}
 
-	g.sprite, err = sf.NewSprite(texture)
+	sprite, err := sf.NewSprite(texture)
 	if err != nil {
 		log.Fatal(err)
 	}
+	g.entity = &Entity{sprite}
 
 	g.mainLoop()
 }
 
 func (g *Game) mainLoop() {
-	renderTicker := time.NewTicker(time.Second / 60)
+	renderTicker := time.NewTicker(time.Second / 120)
 	updateTicker := time.NewTicker(time.Second / 60)
 
 	for g.window.IsOpen() {
@@ -55,16 +56,16 @@ func (g *Game) onUpdate() {
 
 	// crashes, why?
 	// if sf.KeyboardIsKeyPressed(sf.KeyRight) {
-		pos := g.sprite.GetPosition()
-		x := pos.X + 2
-		y := pos.Y
-		g.sprite.SetPosition(sf.Vector2f{x, y})
+	pos := g.entity.GetPosition()
+	x := pos.X + 2
+	y := pos.Y
+	g.entity.SetPosition(sf.Vector2f{x, y})
 	// }
 }
 
 func (g *Game) onRender() {
 	g.window.Clear(sf.ColorMagenta())
-	g.window.Draw(g.sprite, sf.DefaultRenderStates())
+	g.window.Draw(g.entity, sf.DefaultRenderStates())
 	g.window.Display()
 }
 
