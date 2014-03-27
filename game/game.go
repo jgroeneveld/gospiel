@@ -15,7 +15,7 @@ type Game struct {
 func (g *Game) Start(window *sf.RenderWindow) {
 	g.window = window
 
-	texture, err := sf.NewTextureFromFile("foo.png", nil)
+	texture, err := sf.NewTextureFromFile("res/foo.png", nil)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -5,7 +5,7 @@ import (
 
 	sf "bitbucket.org/krepa098/gosfml2"
 
-	"github.com/jgroeneveld/game/game"
+	"github.com/jgroeneveld/gospiel/game"
 )
 
 func init() {
